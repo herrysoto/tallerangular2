@@ -1,0 +1,487 @@
+<section>
+    <header class="header">
+      <div class="nav">
+        <h4 class="title_nav">G-DATA</h4>
+      </div>
+    </header>  
+</section>
+<div class="page-content">
+  <section>
+  <div class="ui-g border-superior">
+        <!--grilla 1-->
+        <div class="ui-g-12 ui-md-6 ui-lg-1 grillas-internas" id="descripción">Seccion</div>
+        <!--grilla 2 trae el codigo de servicios de la tabla servicios-->
+        <div class="ui-g-12 ui-md-6 ui-lg-2 grillas-internas">
+            <select class="lista boton-servicios" [ngModel]="produccio"  (ngModelChange)="mostrarprod($event)"> 
+              <option *ngFor="let produccio of beanservicios" >{{produccio.vchdescripcion}}</option>
+            </select>
+        </div>
+        <!--grilla 3-->
+        <div class="ui-g-12 ui-md-6 ui-lg-2 grillas-internas" id="descripción">Categoria de Servicios</div>
+        <!--grilla 4 trae el codigo de operación de la tabla operacion-->
+        <div class="ui-g-12 ui-md-6 ui-lg-4 grillas-internas" >
+          <div class="">
+            <select class="lista" [ngModel]="cuadroSeleccionado2.vchdescripcion" (ngModelChange)="mostrarprod2($event)">
+              <option  *ngFor="let produccio2 of beanoperacion">{{produccio2.vchdescripcion}}</option>
+            </select>
+          </div>
+        </div>
+        <!--grilla 5 buscar-->
+        <div class="ui-g-12 ui-md-6 ui-lg-2 grillas-internas boton-menu">
+          <div class="col-lg-12">
+            <div class="input-group">
+              <input type="text" class="form-control" #vchdescripcion (keyup.enter)="Buscaroperacionservicioparam()" (keyup)="Ingresaroperacionservicioparam(vchdescripcion.value)" placeholder="Buscar Item" >
+              <span class="input-group-btn">
+              <button  class="btn btn-default" type="button" (click)="Buscaroperacionservicioparam()">
+                <span aria-hidden="true"><img src="../../assets/icon_view.gif" alt=""></span>
+              </button>
+              </span>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+        </div>
+        <!--grilla 6 con boton-->
+        <div class="ui-g-12 ui-md-6 ui-lg-1 boton-menu">
+        <div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <li (click)="showDialogToAdd()"><a href="#">Nuevo numero de trabajo</a></li>
+    <li (click)="getHoraHombre()"><a href="#">Valor Hora/Hombre</a></li>
+    <li role="separator" class="divider"></li>
+    <li class="disabled"><a href="#">Ver laminas de imagenes</a></li>
+    <li class="disabled"><a href="#">Imprimir</a></li>
+    <li class="disabled"><a href="#">Estructura y abreviatura</a></li>
+    <li class="disabled"><a href="#">Ver seccion y categoria</a></li>
+  </ul>
+</div>
+        </div>
+        <!--<div class="ui-g-12 ui-md-6 ui-lg-1 boton-menu">
+          <p-growl [value]="msgs"></p-growl>
+          <p-splitButton label="Menu" [model]="items" disable></p-splitButton>
+        </div>-->
+      </div>
+  </section>
+    <!--TABLA-->
+  <!--Tabla con html y con scroll-->
+    <!--<div id="secondtable"  style="width: 98%;height: 68px;left: 18px;margin-top: 34px;position: relative;">
+				<table class="table table-bordered mytable table-responsive" style="width:100%;font-size:12px;" border="1"      cellpadding="9" cellspacing="0" align="center">
+					<thead style="width:100px;">
+			<tr class="tt" bgcolor="#EBEDF0">
+          		<th rowspan="2" style="width: 84px;position: relative;bottom: 10px;">N° de pieza</th>
+          		<th rowspan="2" style="width: 84px;position: relative;bottom: 10px;">N° de trabajo</th>
+              <th rowspan="2" style="width: 84px;position: relative;bottom: 10px;">N° de trabajo</th>
+          		<th rowspan="2" style="width: 41%;text-align: center;position: relative;bottom: 10px;">Descripcion</th>
+          		<th rowspan="2" style="width: 88px;position: relative;bottom: 10px;">Hora hombre</th>
+          		<th rowspan="2" style="width: 93px;position: relative;bottom: 10px;">Mano de Obra</th>
+          		<th rowspan="2" style="width: 61px;position: relative;bottom: 10px;">Dscto</th>
+          		<th colspan="3">Precio estimado</th>
+				<th rowspan="2" style="width: 17px;"></th>  
+        		</tr>
+        		<tr class="tt" bgcolor="#EBEDF0">
+							<th colspan="1">Mano de Obra </th>
+            	<th colspan="1">Rpto/Mat. </th>
+            	<th colspan="1">Total </th>
+        		</tr>
+					</thead>
+				</table>
+			</div>
+				<div id="secondtable"  style="height: 400px;overflow-y: scroll;width: 98%;top: -17px;left: 18px;position: relative;">
+				<table class="table table-bordered mytable table-hover" style="border-width:thin;position: relative;font-size: 12px;width:100%;" border="1"  *ngIf='beanoperacionservicios && beanoperacionservicios.length'    cellpadding="9" cellspacing="0" align="center">
+					<tbody>
+						<tr class="tt" *ngFor="let beanoperacionservicio of beanoperacionservicios" (click)="selecte(beanoperacionservicio)" style="cursor: pointer;">
+          		<td style="width: 36px;text-align: center;">{{beanoperacionservicio.numnropieza}}</td>
+          		<td style="width: 38px;">{{beanoperacionservicio.codigo}}</td>
+              <td style="width: 37px;">{{beanoperacionservicio.vchnrotrabajo}}</td>
+          		<td style="width: 18%;">{{beanoperacionservicio.vchdescripcion}}</td>
+          		<td style="width: 39px;">{{beanoperacionservicio.numhorashombre | number:'.1-2'}}</td>
+          		<td style="width: 41px;">{{beanoperacionservicio.numpreciosugerido | number:'.1-2'}}</td>
+          		<td style="width: 27px;">{{beanoperacionservicio.numdescuento | number:'.1-2'}}</td>
+          		<td style="width: 40px;">{{beanoperacionservicio.nummanoobra | number:'.1-2'}}</td>
+          		<td style="width: 41px;">{{beanoperacionservicio.numrepuesto | number:'.1-2'}}</td>
+          		<td style="width: 40px;">{{beanoperacionservicio.numtotal | number:'.1-2'}}</td>
+        		</tr>
+					</tbody>
+				</table>
+			</div>-->
+
+      <!--Tabla con html y con scroll-->
+    <div id="secondtable"  style="width: 98%;left: 18px;margin-top: 34px;display: block;position: relative;">
+				<table class="table table-bordered mytable table-responsive" style="width: 100%;font-size: 12px;table-layout: fixed;padding:0px;" border="1"      cellpadding="9" cellspacing="0" align="center">
+					<thead align="center" style="width: 100px;display: table-header-group;">
+			<tr class="tt" bgcolor="#EBEDF0">
+          		<th rowspan="2" style="position: relative;padding: 15px !important;">N° de pieza</th>
+          		<th rowspan="2" style="position: relative;bottom: 10px;">N° de trabajo</th>
+              <th rowspan="2" style="position: relative;bottom: 10px;">N° de trabajo</th>
+          		<th rowspan="2" style="width: 600px;text-align: center;position: relative;bottom: 10px;">Descripcion</th>
+          		<th rowspan="2" style="position: relative;bottom: 10px;">Hora hombre</th>
+          		<th rowspan="2" style="position: relative;bottom: 10px;">Mano de Obra</th>
+          		<th rowspan="2" style="position: relative;bottom: 10px;">Dscto</th>
+          		<th colspan="3">Precio estimado</th>
+				      <th rowspan="2" style="width: 17px;"></th>  
+        		</tr>
+        		<tr class="tt" bgcolor="#EBEDF0">
+							<th colspan="1">Mano de Obra </th>
+            	<th colspan="1">Rpto/Mat. </th>
+            	<th colspan="1">Total </th>
+        		</tr>
+					</thead>
+				</table>
+			</div>
+				<div id="secondtable"  style="height: 418px;width: 98%;top: -21px;left: 18px;position: relative;overflow-y: scroll;">
+				<table class="table table-bordered mytable table-hover" style="border-width: thin;font-size: 12px;width: 100%;table-layout: fixed;display: table;" border="1"  *ngIf='beanoperacionservicios && beanoperacionservicios.length'    cellpadding="9" cellspacing="0" align="center">
+					<tbody>
+						<tr class="tt" *ngFor="let beanoperacionservicio of beanoperacionservicios" (click)="Clickgrid(beanoperacionservicio)" style="cursor: pointer;">
+          		<td style="text-align: center;">{{beanoperacionservicio.numnropieza}}</td>
+          		<td>{{beanoperacionservicio.codigo}}</td>
+              <td>{{beanoperacionservicio.vchnrotrabajo}}</td>
+          		<td style="width: 600px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" title="{{beanoperacionservicio.vchdescripcion}}">{{beanoperacionservicio.vchdescripcion}}</td>
+          		<td style="text-align:right;">{{beanoperacionservicio.numhorashombre | number:'.1-2'}}</td>
+          		<td style="text-align:right;">{{beanoperacionservicio.numpreciosugerido | number:'.1-2'}}</td>
+          		<td style="text-align:right;">{{beanoperacionservicio.numdescuento | number:'.1-2'}}</td>
+          		<td style="text-align:right;">{{beanoperacionservicio.nummanoobra | number:'.1-2'}}</td>
+          		<td style="text-align:right;">{{beanoperacionservicio.numrepuesto | number:'.1-2'}}</td>
+          		<td style="text-align:right;">{{beanoperacionservicio.numtotal | number:'.1-2'}}</td>
+        		</tr>
+					</tbody>
+				</table>
+			</div>
+
+  <!-- tabla con html sin scroll -->
+    <!--<div class="table-responsive">
+    <table class="table table-bordered table-hover"  align="center"  style="position: relative;width: 97%;margin-top: 35px;" >
+      <thead align="center" style="background-color: #ebedf0;font-size: 13px;">
+        <tr>
+          <th rowspan="2" style="padding-bottom: 12px !important;width: 83px;">N° de pieza</th>
+          <th rowspan="2" style="padding-bottom: 12px !important;width: 90px;">Código</th>
+          <th rowspan="2" style="padding-bottom: 12px !important;width: 84px;">N° de trabajo</th>
+          <th rowspan="2" style="padding-bottom: 12px !important;width: 628px;">Descripción</th>
+          <th rowspan="2" style="padding-bottom: 12px !important;">Hora hombre</th>
+          <th rowspan="2" style="padding-bottom: 12px !important;">Mano de Obra</th>
+          <th rowspan="2" style="padding-bottom: 12px !important;">Dscto</th>
+          <th colspan="3">Precio estimado</th>  
+        </tr>
+        <tr><th>Mano de Obra </th>
+            <th>Rpto/Mat. </th>
+            <th>Total </th>
+        </tr>
+      </thead> 
+      <tbody style="font-size: 13px;overflow-y: auto !important;height: 400px !important">
+        <tr *ngFor="let beanoperacionservicio of beanoperacionservicios" (click)="Clickgrid(beanoperacionservicio)" style="cursor: pointer;">
+          <td style="text-align: center;">{{beanoperacionservicio.numnropieza}}</td>
+          <td>{{beanoperacionservicio.codigo}}</td>
+          <td>{{beanoperacionservicio.vchnrotrabajo}}</td>
+          <td style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: inline-block;width: 658px;border-width: 0px 0px 1px 0px;" title="{{beanoperacionservicio.vchdescripcion}}">{{beanoperacionservicio.vchdescripcion}}</td>
+          <td style="text-align:right;">{{beanoperacionservicio.numhorashombre | number:'.1-2'}}</td>
+          <td style="text-align:right;">{{beanoperacionservicio.numpreciosugerido | number:'.1-2'}}</td>
+          <td style="text-align:right;">{{beanoperacionservicio.numdescuento | number:'.1-2'}}</td>
+          <td style="text-align:right;">{{beanoperacionservicio.nummanoobra | number:'.1-2'}}</td>
+          <td style="text-align:right;">{{beanoperacionservicio.numrepuesto | number:'.1-2'}}</td>
+          <td style="text-align:right;">{{beanoperacionservicio.numtotal | number:'.1-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>-->
+
+        <!--popup para insertar un nuevo item-->
+        <p-dialog header="Registrar Item" [(visible)]="Registraritemdialog" [responsive]="true" showEffect="fade" [modal]="true">
+        <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" *ngIf="beanopser" style="font-size: 12px;width: 310px;">
+          <div class="ui-grid-row" >
+            <div class="ui-grid-col-4"><label for="vchcodigooperacion">Codigo</label></div>
+            <div class="ui-grid-col-8  codoperacion"><input style="background-color: black;color: white;" pInputText id="vchcodigooperacion" [(ngModel)]="beanopser.vchcodigooperacion" [disabled]="true"/></div>
+            _
+            <div class="ui-grid-col-8 codoperacionservicio"><input required minlength="1" maxlength="5" pInputText id="chrcodigooperacionservicio" [ngModel]="beanopser.chrcodigooperacionservicio" (keyup)="newChrcodigooperacionservicio(chrcodigooperacionservicio.value)" #chrcodigooperacionservicio="ngModel"/>
+              <div *ngIf="chrcodigooperacionservicio.errors && (chrcodigooperacionservicio.dirty)" class="alert alert-danger">
+                <div [hidden]="!chrcodigooperacionservicio.errors.required">
+                  Código no puede ser vacio
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="vchdescripcion">Descripcion</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="vchdescripcion" required minlength="1" maxlength="100" [ngModel]="beanopser.vchdescripcion" (keyup)="newVchdescripcion(vchdescripcion.value)" #vchdescripcion="ngModel"/>
+              <div *ngIf="vchdescripcion.errors && (vchdescripcion.dirty)" class="alert alert-danger">
+                <div [hidden]="!vchdescripcion.errors.required">
+                   Es necesario ingresar una descripción
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="vchnrotrabajo">n° de trabajo</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="vchnrotrabajo" required minlength="1" maxlength="6" [ngModel]="beanopser.vchnrotrabajo" (keyup)="newVchnumtrabajo(vchnrotrabajo.value)" name="vchnrotrabajo" #vchnrotrabajo="ngModel"/>
+              <div *ngIf="vchnrotrabajo.errors && (vchnrotrabajo.dirty)" class="alert alert-danger">
+                <div [hidden]="!vchnrotrabajo.errors.required">
+                  El Número de trabajo es requerido
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" *ngIf="beanHoraHombre" style="font-size: 11px;width: 250px;padding: 0px;">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4" style="width: 41%;"><label for="horahombre">Valor hora hombre</label></div>
+            <div class="ui-grid-col-8" style="width: 24%;"><input style="background-color: black;color: white;" pInputText id="horahombre" [(ngModel)]="horahombre" [disabled]="true"/></div>
+          </div>
+        </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="numhorashombre">Hora hombre</label></div><!-- [(ngModel)]="beanopser.numhorashombre" -->
+            <div class="ui-grid-col-8"><input required pInputText id="numhorashombre" [ngModel]="beanopser.numhorashombre" (keyup)="newHorasHombre(numhorashombre.value)" #numhorashombre="ngModel"/>
+              <div *ngIf="numhorashombre.errors && (numhorashombre.dirty)" class="alert alert-danger">
+                <div [hidden]="!numhorashombre.errors.required">
+                  La horas hombre es requerido
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="numpreciosugerido">Mano de Obra</label></div>
+            <div class="ui-grid-col-8"><input style="background-color: black;color: white;" pInputText id="numpreciosugerido" [(ngModel)]="beanopser.numpreciosugerido" [disabled]="true"/></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="numdescuento">DSCTO</label></div>
+            <div class="ui-grid-col-8"><input required pInputText id="numdescuento" [ngModel]="beanopser.numdescuento" (keyup)="newNumDescuento(numdescuento.value)" #numdescuento="ngModel"/>
+              <div *ngIf="numdescuento.errors && (numdescuento.dirty)" class="alert alert-danger">
+                <div [hidden]="!numdescuento.errors.required">
+                  El descuento es necesario
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="numtotal">Precio total</label></div>
+            <div class="ui-grid-col-8"><input style="background-color: black;color: white;" pInputText id="numtotal" [(ngModel)]="beanopser.numtotal" [disabled]="true"/></div>
+          </div>
+           
+        <footer>
+          <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="salirRegistrar()" label="Salir"></button>
+            <button type="button" pButton icon="fa-check" [disabled]="toggleButton" (click)="Validarnegativosregistrar(beanopser.vchcodigooperacion,beanopser.chrcodigooperacionservicio,beanopser.vchnrotrabajo,beanopser.vchdescripcion,beanopser.numhorashombre,beanopser.numpreciosugerido,beanopser.numdescuento,beanopser.numtotal)" label="Guardar"></button>
+          </div>
+        </footer>
+        </div>                  
+      </p-dialog>
+
+      <p-confirmDialog width="425" acceptLabel="Aceptar"></p-confirmDialog>
+
+      <!--popup para actualizar el valor hora hombre-->
+        <p-dialog header="Valor Hora Hombre" [(visible)]="Actulizarhhdialog" [responsive]="true" showEffect="fade" [modal]="true">
+        <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" *ngIf="beanHoraHombre" style="font-size: 12px;width: 250px;padding: 0px;">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4" style="width: 56%;"><label for="horahombre">Valor hora hombre</label></div>
+            <div class="ui-grid-col-8" style="width: 27%;"><input pInputText id="horahombre" [(ngModel)]="horahombre"/></div>
+          </div>
+        </div>
+        <footer>
+          <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="salirHorasHombre()" label="Salir"></button>
+            <button type="button" pButton icon="fa-check" (click)="savehh(numhorashombre)" label="Guardar"></button>
+          </div>
+        </footer>
+      </p-dialog>
+
+      <!--popup para actualizar las operaciones servicios-->
+      <p-dialog header="Actualizar Item" [(visible)]="Actualizaritemdialog" [responsive]="true" showEffect="fade" [modal]="true">
+        <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" *ngIf="cuadroSeleccionado3" style="font-size: 12px;width: 310px;">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="vchcodigooperacion">Codigo</label></div>
+            <div class="ui-grid-col-8  codoperacion"><input style="background-color: black;color: white;" pInputText id="vchcodigooperacion" [(ngModel)]="cuadroSeleccionado3.vchcodigooperacion" [disabled]="true"/></div>
+            _
+            <div class="ui-grid-col-8 codoperacionservicio"><input style="background-color: black;color: white;" pInputText id="chrcodigooperacionservicio" [(ngModel)]="cuadroSeleccionado3.chrcodigooperacionservicio" [disabled]="true"/></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="vchdescripcion">Descripcion</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="vchdescripcion" [value]="cuadroSeleccionado3.vchdescripcion" (keyup)="mostrarDescripcion(vchdescripcion.value)" #vchdescripcion/></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="vchnrotrabajo">N° de trabajo</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="vchnrotrabajo" [value]="cuadroSeleccionado3.vchnrotrabajo" (keyup)="mostrarNumeroTrabajo(vchnrotrabajo.value)" #vchnrotrabajo/></div>
+          </div>
+          <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" *ngIf="beanHoraHombre" style="font-size: 11px;width: 250px;padding: 0px;">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4" style="width: 41%;"><label for="horahombre">Valor hora hombre</label></div>
+            <div class="ui-grid-col-8" style="width: 24%;"><input style="background-color: black;color: white;" pInputText id="horahombre" [(ngModel)]="horahombre" [disabled]="true"/></div>
+          </div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="numhorashombre">Hora hombre</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="numhorashombre" [value]="cuadroSeleccionado3.numhorashombre" (keyup)="mostrashorahombre(numhorashombre.value)" #numhorashombre /></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="numpreciosugerido">Mano de Obra</label></div>
+            <div class="ui-grid-col-8"><input style="background-color: black;color: white;" pInputText id="numpreciosugerido" [(ngModel)]="cuadroSeleccionado3.numpreciosugerido" [disabled]="true"/></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="numdescuento">DSCTO</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="numdescuento" [value]="cuadroSeleccionado3.numdescuento" (keyup)="validardescuento(numdescuento.value)" #numdescuento/></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="numtotal">Total</label></div>
+            <div class="ui-grid-col-8"><input style="background-color: black;color: white;" pInputText id="numtotal" [(ngModel)]="cuadroSeleccionado3.numtotal" [disabled]="true"/></div>
+          </div>
+        </div>
+        <footer>
+          <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="salirUpdate()" label="Salir"></button>
+            <button type="button" pButton icon="fa-check" [disabled]="toggleButtonupdate" (click)="Validacionnegativos(cuadroSeleccionado3.vchnrotrabajo,cuadroSeleccionado3.vchdescripcion,cuadroSeleccionado3.numpreciosugerido,
+            cuadroSeleccionado3.numhorashombre,cuadroSeleccionado3.numdescuento,cuadroSeleccionado3.numtotal,
+            cuadroSeleccionado3.chrcodigooperacionservicio,cuadroSeleccionado3.vchcodigooperacion)" label="Guardar"></button>
+          </div>
+        </footer>
+      </p-dialog>
+
+      <!--Este dialog sirve para ver si el usuario quiere ver los contenidos o quiere editar el item-->
+      <p-dialog header="Escoja una opción" [(visible)]="Veroeditardialog" [responsive]="true" showEffect="fade" [modal]="true">
+        <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" style="font-size: 12px;width: 250px;padding: 0px;">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-8" style="width: 100%;">
+              <button type="button" class="btn btn-primary btn-lg" style="font-size:20px;color: #31708f;background-color: #d9edf7;border-color: #bce8f1;" pButton (click)="EscogerEditarItem()"  label="Editar item"></button> 
+            </div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-8" style="width: 100%;">
+              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="font-size:20px;color: #31708f;background-color: #d9edf7;border-color: #bce8f1;" pButton (click)="EscogerVerContenidos()" label="Ver Contenidos"></button>
+            </div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-8" style="width: 100%;">
+              <button type="button" class="btn btn-primary btn-lg" style="font-size:20px;color: #31708f;background-color: #d9edf7;border-color: #bce8f1;" pButton label="SALIR" (click)="SalirVeroeditardialog()"></button>
+            </div>
+          </div>
+        </div>
+      </p-dialog>
+
+
+      <!--esto es para ver los contenidos-->
+         <!-- Modal -->
+          <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+             <div class="modal-dialog modal-lg" role="document" style="margin: 20px auto;">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel" align="center">SERVICIOS CONTENIDOS</h4>
+                  </div>
+                <div class="modal-body">
+                  <div class="body-header"  style="display:block;font-size: 12px;">
+                      <div class="operacion-servicio"  style="display:inline-block;">
+                        <span style="margin-right: 20px;">{{cuadroSeleccionado3.codigo}}</span> <span>{{cuadroSeleccionado3.vchdescripcion}}</span> 
+                      </div>
+                      <div class="totales-contenidos" style="position:relative;display:inline-block;margin-left: 130px;">
+                        <div class="mano-de-obra" style="display:inline-block;margin-right:20px;">
+                          <span>Mano de obra</span><input class="form-control" type="text" placeholder="Readonly" [(ngModel)]="totalmanoobracontenido" style="width:90px;" readonly>
+                        </div>
+                        <div class="repuestos" style="display:inline-block;margin-right:20px;">
+                          <span>Repuestos</span><input class="form-control" type="text" placeholder="0"  style="width:90px;" readonly>
+                        </div>
+                        <div class="Complementarios" style="display:inline-block;margin-right:20px;">
+                          <span>Complementarios</span><input class="form-control" type="text" placeholder="0"  style="width:90px;" readonly>
+                        </div>
+                        <div class="Totales" style="display:inline-block;margin-right:20px;">
+                          <span>Totales</span><input class="form-control" type="text" placeholder="Readonly" [(ngModel)]="totalmanoobracontenido" style="width:90px;" readonly>
+                        </div>
+                      </div>
+                  </div>
+                      <!-- tabla con html sin scroll -->
+                      <div id="secondtable"  style="width: 98%;left: 18px;margin-top: 34px;display: block;position: relative;">
+				                <table class="table table-bordered mytable table-responsive" style="width: 100%;font-size: 12px;table-layout: fixed;padding:0px;" border="1"      cellpadding="9" cellspacing="0" align="center">
+					                <thead align="center" style="width: 100px;display: table-header-group;">
+			                      <tr class="tt" bgcolor="#EBEDF0">
+          		                <th rowspan="2" style="padding-bottom: 12px !important;">N° de pieza</th>
+                              <th rowspan="2" style="padding-bottom: 12px !important;width: 70px;">Código</th>
+                              <th rowspan="2" style="padding-bottom: 12px !important;width: 84px;">N° de trabajo</th>
+                              <th rowspan="2" style="padding-bottom: 12px !important;width: 480px;">Descripción</th>
+                              <th>Hora Hombre</th>
+                              <th>Mano de obra</th>
+                              <th style="width: 80px;">Dsct</th>
+                              <th style="width: 74px;">Total</th>
+                              <th rowspan="2" style="width: 17px;"></th> 
+        		                </tr>
+					                </thead>
+				                </table>
+			                </div>
+				              <div id="secondtable"  style="height: 265px;width: 98%;top: -21px;left: 18px;position: relative;overflow-y: scroll;border: 1px solid rgb(235, 237, 240);">
+				                <table class="table table-bordered mytable table-hover" style="border-width: thin;font-size: 12px;width: 100%;table-layout: fixed;display: table;" border="1"  *ngIf='beanoperacionservicios && beanoperacionservicios.length'    cellpadding="9" cellspacing="0" align="center">
+					                <tbody  style="font-size: 13px;overflow-y: auto !important;height: 400px !important">
+                            <tr *ngFor="let beanoperacionservicioc of beanoperacionservicioscontenido" style="cursor: pointer;font-size: 11px;">
+                              <td style="text-align: center;width: 83px;">{{beanoperacionservicioc.numnropieza}}</td>
+                              <td style="width: 70px;">{{beanoperacionservicioc.codigo}}</td>
+                              <td style="width: 84px;">{{beanoperacionservicioc.vchnrotrabajo}}</td>
+                              <td style="width: 480px;">{{beanoperacionservicioc.vchdescripcion}}</td>
+                              <td style="text-align:right;">{{beanoperacionservicioc.numhorashombre | number:'.1-2'}}</td>
+                              <td style="text-align:right;">{{beanoperacionservicioc.numpreciosugerido | number:'.1-2'}}</td>
+                              <td style="text-align:right;width: 80px;">{{beanoperacionservicioc.numdescuento}}</td>
+                              <td style="text-align:right;width: 74px;">{{beanoperacionservicioc.numtotal}}</td>
+                            </tr>
+                          </tbody>
+				                </table>
+			                </div>
+                        <!--esta es la tabla para el total-->
+                      <div id="secondtable"  style="height: 40px;width: 98%;top: -21px;left: 18px;position: relative;">
+				                <table class="table table-bordered mytable table-hover" style="border-width: thin;font-size: 12px;width: 100%;table-layout: fixed;display: table;" border="1"  *ngIf='beanoperacionservicios && beanoperacionservicios.length'    cellpadding="9" cellspacing="0" align="center">
+					                <tbody  style="font-size: 13px;overflow-y: auto !important;height: 400px !important">
+                            <tr class="success" style="cursor: pointer;font-size: 11px;">
+                              <td style="text-align: center;width: 83px;"></td>
+                              <td style="width: 70px;"></td>
+                              <td style="width: 84px;"></td>
+                              <td style="width: 480px;">TOTAL</td>
+                              <td style="text-align:right;">{{returntotalhhcontenido() | number:'.1-2'}}</td>
+                              <td style="text-align:right;">{{returntotalmanoobracontenido() | number:'.1-2'}}</td>
+                              <td style="text-align:right;width: 80px;"></td>
+                              <td style="text-align:right;width: 74px;">{{totalcontenido | number:'.1-2'}}</td>
+                              <td style="width:17px;"></td>
+                            </tr>
+                          </tbody>
+				                </table>
+			                </div>
+
+                            <!--esta tabla esta sin scroll-->
+                        <!--<div class="table-responsive">
+                        <table class="table table-bordered table-hover"  align="center"  style="position: relative;width: 97%;margin-top: 35px;" >
+                          <thead align="center" style="background-color: #ebedf0;font-size: 11px;">
+                            <tr>
+                              <th rowspan="2" style="padding-bottom: 12px !important;">N° de pieza</th>
+                              <th rowspan="2" style="padding-bottom: 12px !important;width: 70px;">Código</th>
+                              <th rowspan="2" style="padding-bottom: 12px !important;width: 84px;">N° de trabajo</th>
+                              <th rowspan="2" style="padding-bottom: 12px !important;width: 480px;">Descripción</th>
+                              <th>Hora Hombre</th>
+                              <th>Mano de obra</th>
+                              <th style="width: 80px;">Dsct</th>
+                              <th style="width: 74px;">Total</th>
+                              <th rowspan="2" style="width: 17px;"></th>
+                            </tr>
+                          </thead> 
+                          <tbody  style="font-size: 13px;overflow-y: auto !important;height: 400px !important">
+                            <tr *ngFor="let beanoperacionservicioc of beanoperacionservicioscontenido" style="cursor: pointer;font-size: 11px;">
+                              <td style="text-align: center;">{{beanoperacionservicioc.numnropieza}}</td>
+                              <td>{{beanoperacionservicioc.codigo}}</td>
+                              <td>{{beanoperacionservicioc.vchnrotrabajo}}</td>
+                              <td>{{beanoperacionservicioc.vchdescripcion}}</td>
+                              <td style="text-align:right;">{{beanoperacionservicioc.numhorashombre}}</td>
+                              <td style="text-align:right;">{{beanoperacionservicioc.numpreciosugerido | number:'.1-2'}}</td>
+                              <td style="text-align:right;">{{beanoperacionservicioc.numdescuento}}</td>
+                              <td style="text-align:right;">{{beanoperacionservicioc.numtotal}}</td>
+                            </tr>
+                            <tr style="cursor: pointer;font-size: 11px;">
+                              <td style="text-align: center;"></td>
+                              <td></td>
+                              <td></td>
+                              <td>TOTAL</td>
+                              <td style="text-align:right;">{{returntotalhhcontenido() | number:'.1-2'}}</td>
+                              <td style="text-align:right;">{{returntotalmanoobracontenido() | number:'.1-2'}}</td>
+                              <td style="text-align:right;"></td>
+                              <td style="text-align:right;">{{totalcontenido | number:'.1-2'}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </div>-->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" data-dismiss="modal" class="btn btn-default" >Regresar</button>
+                  <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                </div>
+               </div>
+              </div>
+          </div>
+
+
+</div>
